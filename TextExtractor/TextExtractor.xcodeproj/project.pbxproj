@@ -19,6 +19,8 @@
 		84B426F9187BCC4200783D95 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B426E1187BCC4200783D95 /* UIKit.framework */; };
 		84B42701187BCC4200783D95 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84B426FF187BCC4200783D95 /* InfoPlist.strings */; };
 		84B42703187BCC4200783D95 /* TextExtractorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B42702187BCC4200783D95 /* TextExtractorTests.m */; };
+		84B42711187C210600783D95 /* MVTextExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B42710187C210600783D95 /* MVTextExtractor.m */; };
+		84B42714187C286B00783D95 /* NSString+MVString.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B42713187C286B00783D95 /* NSString+MVString.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,10 @@
 		84B426FE187BCC4200783D95 /* TextExtractorTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TextExtractorTests-Info.plist"; sourceTree = "<group>"; };
 		84B42700187BCC4200783D95 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		84B42702187BCC4200783D95 /* TextExtractorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextExtractorTests.m; sourceTree = "<group>"; };
+		84B4270F187C210600783D95 /* MVTextExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MVTextExtractor.h; sourceTree = "<group>"; };
+		84B42710187C210600783D95 /* MVTextExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MVTextExtractor.m; sourceTree = "<group>"; };
+		84B42712187C286B00783D95 /* NSString+MVString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MVString.h"; sourceTree = "<group>"; };
+		84B42713187C286B00783D95 /* NSString+MVString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MVString.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +117,10 @@
 				84B426ED187BCC4200783D95 /* AppDelegate.m */,
 				84B426EF187BCC4200783D95 /* Images.xcassets */,
 				84B426E4187BCC4200783D95 /* Supporting Files */,
+				84B4270F187C210600783D95 /* MVTextExtractor.h */,
+				84B42710187C210600783D95 /* MVTextExtractor.m */,
+				84B42712187C286B00783D95 /* NSString+MVString.h */,
+				84B42713187C286B00783D95 /* NSString+MVString.m */,
 			);
 			path = TextExtractor;
 			sourceTree = "<group>";
@@ -239,8 +249,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84B42711187C210600783D95 /* MVTextExtractor.m in Sources */,
 				84B426EE187BCC4200783D95 /* AppDelegate.m in Sources */,
 				84B426EA187BCC4200783D95 /* main.m in Sources */,
+				84B42714187C286B00783D95 /* NSString+MVString.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,6 +455,7 @@
 				84B42708187BCC4200783D95 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		84B42709187BCC4200783D95 /* Build configuration list for PBXNativeTarget "TextExtractorTests" */ = {
 			isa = XCConfigurationList;
@@ -451,6 +464,7 @@
 				84B4270B187BCC4200783D95 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

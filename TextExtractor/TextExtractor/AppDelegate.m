@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "NSString+MVString.h"
 
 @implementation AppDelegate
 
@@ -14,6 +15,14 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    NSString *parragraph=@"Token based authentication discussed with Dhanasekar and the EDC is updated for the same. With this the entire plan is almost complete except the data aggregation for dashboard. We have to analyse more on data aggregation design to finalize this.Helped Taheer to get clarity on Serialize & De-serialize the local table data and how it is implemented in EarnSmart 1.1. The same is integrated with current sqliteWrapper class.We have decided to publish the api list for EarnSmart 2.0 in apiary for better clarity. With the previous list of api the login & company related changes has to be included in this. I want to start this by listing out the api list screen by screen.";
+    NSLog(@"lines==%d",[parragraph numberOfWord]);
+    NSLog(@"character==%@",[parragraph language]);
+    NSLog(@"lines==%d",[parragraph numberOfOccurenceOfWord:@"current"]);
+    NSLog(@"lines==%d",[parragraph numberCorrectSpelledWord]);
+    NSLog(@"lines==%d",[parragraph numberNonCorrectSpelledWord]);
+    
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
