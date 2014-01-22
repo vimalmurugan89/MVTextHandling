@@ -20,16 +20,13 @@
     NSRegularExpression *regexp = [NSRegularExpression regularExpressionWithPattern:@"([a-z])([A-Z])" options:0 error:NULL];
     return [regexp stringByReplacingMatchesInString:self options:0 range:NSMakeRange(0, self.length) withTemplate:@"$1 $2"];
 }
--(NSUInteger)numberUpperCaseCharacter{
+-(NSUInteger)numberOfUpperCaseCharacter{
     return [[[self componentsSeparatedByCharactersInSet:[[NSCharacterSet uppercaseLetterCharacterSet] invertedSet]] componentsJoinedByString:@""] length];
 }
 -(NSUInteger)numberOfLowerCaseCharacter{
-    return [self length]-[self numberUpperCaseCharacter];
+    return [self length]-[self numberOfUpperCaseCharacter];
 }
--(BOOL)isAvailableWord:(NSString*)word{
-    NSArray *textArray=[self componentsSeparatedByString:@" "];
-    return [textArray containsObject:word];
-}
+
 -(NSUInteger)numberOfWord{
     NSArray *textArray=[self componentsSeparatedByString:@" "];
     return [textArray count];
@@ -74,12 +71,147 @@
         if (range.location == NSNotFound) {
             wordsFound++;
         }
-       
+       //Application supports iTunes file sharing
     }
     return wordsFound;
 }
 -(NSUInteger)numberNonCorrectSpelledWord{
     return [self numberOfWord]-[self numberCorrectSpelledWord];
+}
+
+-(NSArray*)listOfPhoneNumber{
+    
+    NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypePhoneNumber
+                                                               error:nil];
+    return [detector matchesInString:self
+                             options:0
+                               range:NSMakeRange(0, [self length])];
+    
+}
+-(NSArray*)listOfMailId{
+
+    NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink
+                                                               error:nil];
+   return [detector matchesInString:self
+                                         options:0
+                                           range:NSMakeRange(0, [self length])];
+}
+
+//Actions
+-(NSString*)removeWhiteSpaceAtEnd{
+   return [self stringByTrimmingCharactersInSet:
+                               [NSCharacterSet whitespaceCharacterSet]];
+}
+-(NSString*)removeNewLineCharacter{
+    return [self stringByTrimmingCharactersInSet: [NSCharacterSet newlineCharacterSet]];
+}
+-(NSString*)removeWhiteSpaceAndNewline{
+   return [self stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+}
+-(NSString*)getInbetweenString:(NSString*)separator{
+    NSRange firstInstance = [self rangeOfString:separator];
+    NSRange secondInstance = [[self substringFromIndex:firstInstance.location + firstInstance.length] rangeOfString:separator];
+    NSRange finalRange = NSMakeRange(firstInstance.location + separator.length, secondInstance.location);
+    
+    return [self substringWithRange:finalRange];
+}
+-(NSString*)substringFromString:(NSString*)string{
+    NSRange range = [self rangeOfString:string];
+   return [[self substringFromIndex:NSMaxRange(range)] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+}
+
+-(NSString*)substringToString:(NSString*)string{
+    NSRange range = [self rangeOfString:string];
+    return [[self substringToIndex:NSMaxRange(range)] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+}
+
+-(NSString*)mergeString:(NSString*)value{
+    return [self stringByAppendingString:value];
+}
+
+//checking
+-(BOOL)isNULLOrEmpty{
+    if (!self||[self isKindOfClass:[NSNull class]]||[self length]==0) {
+        return YES;
+    }
+    return NO;
+}
+-(BOOL)isNumber{
+    
+    NSCharacterSet *alphaNumbersSet = [NSCharacterSet decimalDigitCharacterSet];
+    NSCharacterSet *stringSet = [NSCharacterSet characterSetWithCharactersInString:self];
+    return [alphaNumbersSet isSupersetOfSet:stringSet];
+ 
+}
+-(BOOL)isAvailableWord:(NSString*)word{
+    NSArray *textArray=[self componentsSeparatedByString:@" "];
+    return [textArray containsObject:word];
+}
+-(BOOL)isPalindrome{
+   
+    NSInteger length = self.length;
+    
+    NSInteger halfLength = length / 2;
+    
+    __block BOOL isPalindrome = YES;
+    
+    [self enumerateSubstringsInRange:NSMakeRange(0, halfLength) options:NSStringEnumerationByComposedCharacterSequences usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
+        NSRange otherRange = [self rangeOfComposedCharacterSequenceAtIndex:length - enclosingRange.location - 1];
+        
+        if (![substring isEqualToString:[self substringWithRange:otherRange]]) {
+            isPalindrome = NO;
+            *stop = YES;
+        }
+    }];
+    return isPalindrome;
+}
+-(BOOL)isMailId{
+  
+    NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink
+                                                               error:nil];
+    NSUInteger numberOfMatches = [detector numberOfMatchesInString:self
+                                                           options:0
+                                                             range:NSMakeRange(0, [self length])];
+    if (numberOfMatches>0) {
+        return YES;
+    }
+    return NO;
+    
+}
+-(BOOL)isPhoneNumber{
+   
+    NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypePhoneNumber
+                                                               error:nil];
+    NSUInteger numberOfMatches = [detector numberOfMatchesInString:self
+                                                           options:0
+                                                             range:NSMakeRange(0, [self length])];
+    if (numberOfMatches>0) {
+        return YES;
+    }
+    return NO;
+}
+-(BOOL)isURL{
+    if ([self hasPrefix:@"http://"] || [self hasPrefix:@"https://"]){
+        return YES;
+    }
+    return NO;
+}
+
+//conversions
+-(NSData*)data{
+    return [self dataUsingEncoding:NSUTF8StringEncoding];
+}
+-(NSURL*)url{
+    if ([self isURL]){
+        return [NSURL URLWithString:self];
+    }
+    return [NSURL fileURLWithPath:self];
+}
+-(NSDate*)dateWithFormatter:(NSDateFormatter*)formatter{
+    if (formatter==nil) {
+        return nil;
+    }
+    return [formatter dateFromString:self];
 }
 
 @end
