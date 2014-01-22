@@ -80,21 +80,38 @@
 }
 
 -(NSArray*)listOfPhoneNumber{
-    
+    NSMutableArray *phoneNumberArray=[NSMutableArray array];
     NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypePhoneNumber
                                                                error:nil];
-    return [detector matchesInString:self
+    NSArray *matches=[detector matchesInString:self
                              options:0
                                range:NSMakeRange(0, [self length])];
+    for (NSTextCheckingResult *match in matches) {
+        if ([match resultType] == NSTextCheckingTypePhoneNumber) {
+            [phoneNumberArray addObject:[match phoneNumber]];
+           
+        }
+    }
+    
+    return phoneNumberArray;
     
 }
 -(NSArray*)listOfMailId{
 
+    NSMutableArray *mailIdArray=[NSMutableArray array];
     NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink
                                                                error:nil];
-   return [detector matchesInString:self
-                                         options:0
-                                           range:NSMakeRange(0, [self length])];
+    NSArray *matches=[detector matchesInString:self
+                                       options:0
+                                         range:NSMakeRange(0, [self length])];
+    for (NSTextCheckingResult *match in matches) {
+        if ([match resultType] == NSTextCheckingTypeLink) {
+            [mailIdArray addObject:[match phoneNumber]];
+            
+        }
+    }
+    
+    return mailIdArray;
 }
 
 //Actions
